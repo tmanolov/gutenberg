@@ -141,3 +141,20 @@ export function receiveUploadPermissions( hasUploadPermissions ) {
 		hasUploadPermissions,
 	};
 }
+
+/**
+ * Returns an action object used in signalling that the latest autosave of the
+ * post has been received, by initialization or autosave.
+ *
+ * @param {number} postId   The id of the post that is parent to the autosave.
+ * @param {Object} autosave Autosave post object.
+ *
+ * @return {Object} Action object.
+ */
+export function resetAutosave( postId, autosave ) {
+	return {
+		type: 'RESET_AUTOSAVE',
+		postId,
+		autosave,
+	};
+}

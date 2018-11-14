@@ -303,6 +303,7 @@ Returns true if the post can be autosaved, or false otherwise.
 *Parameters*
 
  * state: Global application state.
+ * autosave: An autosave object.
 
 *Returns*
 
@@ -1487,7 +1488,7 @@ post has been received, by initialization or autosave.
 
 *Parameters*
 
- * post: Autosave post object.
+ * newAutosave: Autosave post object.
 
 ### updatePost
 

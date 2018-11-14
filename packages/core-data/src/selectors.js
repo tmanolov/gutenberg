@@ -180,3 +180,50 @@ export function isPreviewEmbedFallback( state, url ) {
 export function hasUploadPermissions( state ) {
 	return state.hasUploadPermissions;
 }
+
+/**
+ * Returns an attribute value of the current autosave revision for a post, or
+ * null if there is no autosave for the post.
+ *
+ * @param {Object} state         State tree.
+ * @param {number} postId        The post id.
+ * @param {string} attributeName Autosave attribute name.
+ *
+ * @return {*} Autosave attribute value.
+ */
+export function getAutosaveAttribute( state, postId, attributeName ) {
+	if ( ! hasAutosave( state, postId ) ) {
+		return;
+	}
+
+	const autosave = getAutosave( state, postId );
+	if ( autosave.hasOwnProperty( attributeName ) ) {
+		return autosave[ attributeName ];
+	}
+}
+
+/**
+ * Returns the autosave associated with the provided postId.
+ *
+ * @param {Object} state  State tree.
+ * @param {number} postId The post id.
+ *
+ * @return {?Object} The autosave object, if it exists.
+ */
+export function getAutosave( state, postId ) {
+	if ( state.autosave ) {
+		return state.autosave[ postId ];
+	}
+}
+
+/**
+ * Returns the true if there is an autosave for the given post id, otherwise false.
+ *
+ * @param {Object} state  State tree.
+ * @param {number} postId The post id.
+ *
+ * @return {boolean} Whether there is an existing autosave.
+ */
+export function hasAutosave( state, postId ) {
+	return !! getAutosave( state, postId );
+}

@@ -1,3 +1,9 @@
+## 2.1.0 (Unreleased)
+
+### New features
+- The `getAutosave`, `getAutosaveAttribute`, and `hasAutosave` selectors were added.
+- The `resetAutosave` action creator has been added.
+
 ## 2.0.16 (2019-01-03)
 
 ### Bug Fixes

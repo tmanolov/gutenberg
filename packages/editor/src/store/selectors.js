@@ -35,6 +35,8 @@ import {
 import { isInTheFuture, getDate } from '@wordpress/date';
 import { removep } from '@wordpress/autop';
 import { addQueryArgs } from '@wordpress/url';
+import { select } from '@wordpress/data';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -328,14 +330,13 @@ export function getEditedPostAttribute( state, attributeName ) {
  * @return {*} Autosave attribute value.
  */
 export function getAutosaveAttribute( state, attributeName ) {
-	if ( ! hasAutosave( state ) ) {
-		return null;
-	}
+	deprecated( 'getAutosaveAttribute selector (`core/editor` store)', {
+		alternative: 'getAutosaveAttribute selector (`core` store)',
+		plugin: 'Gutenberg',
+	} );
 
-	const autosave = getAutosave( state );
-	if ( autosave.hasOwnProperty( attributeName ) ) {
-		return autosave[ attributeName ];
-	}
+	const postId = getCurrentPostId( state );
+	return select( 'core' ).getAutosaveAttribute( postId, attributeName );
 }
 
 /**
@@ -496,18 +497,29 @@ export function isEditedPostEmpty( state ) {
 /**
  * Returns true if the post can be autosaved, or false otherwise.
  *
- * @param  {Object}  state Global application state.
+ * @param  {Object} state    Global application state.
+ * @param  {Object} autosave An autosave object.
  *
  * @return {boolean} Whether the post can be autosaved.
  */
-export function isEditedPostAutosaveable( state ) {
+export function isEditedPostAutosaveable( state, autosave ) {
+	if ( autosave === undefined ) {
+		deprecated( '`isEditedPostAutosaveable` selector now requires the argument `autosave` to be provided', {
+			plugin: 'Gutenberg',
+			hint: 'This warning may be displayed incorrectly when the `autosave` argument is used, but the value of the autosave is legitimately undefined',
+		} );
+
+		const postId = getCurrentPostId( state );
+		autosave = select( 'core' ).getAutosave( postId );
+	}
+
 	// A post must contain a title, an excerpt, or non-empty content to be valid for autosaving.
 	if ( ! isEditedPostSaveable( state ) ) {
 		return false;
 	}
 
 	// If we don't already have an autosave, the post is autosaveable.
-	if ( ! hasAutosave( state ) ) {
+	if ( ! autosave ) {
 		return true;
 	}
 
@@ -520,7 +532,6 @@ export function isEditedPostAutosaveable( state ) {
 	}
 
 	// If the title, excerpt or content has changed, the post is autosaveable.
-	const autosave = getAutosave( state );
 	return [ 'title', 'excerpt' ].some( ( field ) => (
 		autosave[ field ] !== getEditedPostAttribute( state, field )
 	) );
@@ -536,7 +547,13 @@ export function isEditedPostAutosaveable( state ) {
  * @return {?Object} Current autosave, if exists.
  */
 export function getAutosave( state ) {
-	return state.autosave;
+	deprecated( 'getAutosave selector (`core/editor` store)', {
+		alternative: 'getAutosave selector (`core` store)',
+		plugin: 'Gutenberg',
+	} );
+
+	const postId = getCurrentPostId( state );
+	return select( 'core' ).getAutosave( postId );
 }
 
 /**
@@ -547,7 +564,13 @@ export function getAutosave( state ) {
  * @return {boolean} Whether there is an existing autosave.
  */
 export function hasAutosave( state ) {
-	return !! getAutosave( state );
+	deprecated( 'hasAutosave selector (`core/editor` store)', {
+		alternative: 'hasAutosave selector (`core` store)',
+		plugin: 'Gutenberg',
+	} );
+
+	const postId = getCurrentPostId( state );
+	return select( 'core' ).hasAutosave( postId );
 }
 
 /**

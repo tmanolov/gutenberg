@@ -1272,37 +1272,9 @@ export const blockListSettings = ( state = {}, action ) => {
 };
 
 /**
- * Reducer returning the most recent autosave.
- *
- * @param  {Object} state  The autosave object.
- * @param  {Object} action Dispatched action.
- *
- * @return {Object} Updated state.
- */
-export function autosave( state = null, action ) {
-	switch ( action.type ) {
-		case 'RESET_AUTOSAVE':
-			const { post } = action;
-			const [ title, excerpt, content ] = [
-				'title',
-				'excerpt',
-				'content',
-			].map( ( field ) => getPostRawValue( post[ field ] ) );
-
-			return {
-				title,
-				excerpt,
-				content,
-			};
-	}
-
-	return state;
-}
-
-/**
  * Reducer returning the post preview link.
  *
- * @param {string?} state  The preview link
+ * @param {string?} state  The preview link.
  * @param {Object}  action Dispatched action.
  *
  * @return {string?} Updated state.
@@ -1344,7 +1316,6 @@ export default optimist( combineReducers( {
 	postLock,
 	reusableBlocks,
 	template,
-	autosave,
 	previewLink,
 	settings,
 	postSavingLock,

@@ -35,7 +35,6 @@ import {
 	reusableBlocks,
 	template,
 	blockListSettings,
-	autosave,
 	postSavingLock,
 	previewLink,
 } from '../reducer';
@@ -2466,38 +2465,6 @@ describe( 'state', () => {
 			} );
 
 			expect( state ).toEqual( {} );
-		} );
-	} );
-
-	describe( 'autosave', () => {
-		it( 'returns null by default', () => {
-			const state = autosave( undefined, {} );
-
-			expect( state ).toBe( null );
-		} );
-
-		it( 'returns subset of received autosave post properties', () => {
-			const state = autosave( undefined, {
-				type: 'RESET_AUTOSAVE',
-				post: {
-					title: {
-						raw: 'The Title',
-					},
-					content: {
-						raw: 'The Content',
-					},
-					excerpt: {
-						raw: 'The Excerpt',
-					},
-					status: 'draft',
-				},
-			} );
-
-			expect( state ).toEqual( {
-				title: 'The Title',
-				content: 'The Content',
-				excerpt: 'The Excerpt',
-			} );
 		} );
 	} );
 

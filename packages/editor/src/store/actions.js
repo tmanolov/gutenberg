@@ -7,6 +7,8 @@ import { castArray } from 'lodash';
  * WordPress dependencies
  */
 import { getDefaultBlockName, createBlock } from '@wordpress/blocks';
+import { dispatch, select } from '@wordpress/data';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Returns an action object used in signalling that editor has initialized with
@@ -44,15 +46,20 @@ export function resetPost( post ) {
  * Returns an action object used in signalling that the latest autosave of the
  * post has been received, by initialization or autosave.
  *
- * @param {Object} post Autosave post object.
+ * @param {Object} newAutosave Autosave post object.
  *
  * @return {Object} Action object.
  */
-export function resetAutosave( post ) {
-	return {
-		type: 'RESET_AUTOSAVE',
-		post,
-	};
+export function resetAutosave( newAutosave ) {
+	deprecated( 'resetAutosave action (`core/editor` store)', {
+		alternative: 'resetAutosave action (`core` store)',
+		plugin: 'Gutenberg',
+	} );
+
+	const postId = select( 'core' ).getCurrentPostId();
+	dispatch( 'core' ).resetAutosave( newAutosave, postId );
+
+	return { type: '__INERT__' };
 }
 
 /**
