@@ -87,8 +87,6 @@ if ( ! function_exists( 'register_tinymce_scripts' ) ) {
 			gutenberg_override_script( 'wp-tinymce-root', includes_url( 'js/tinymce/' ) . "tinymce{$mce_suffix}.js", array(), $tinymce_version );
 			gutenberg_override_script( 'wp-tinymce', includes_url( 'js/tinymce/' ) . "plugins/compat3x/plugin{$suffix}.js", array( 'wp-tinymce-root' ), $tinymce_version );
 		}
-
-		gutenberg_override_script( 'wp-tinymce-lists', includes_url( 'js/tinymce/' ) . "plugins/lists/plugin{$suffix}.js", array( 'wp-tinymce' ), $tinymce_version );
 	}
 }
 
