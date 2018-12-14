@@ -1,3 +1,9 @@
+## 7.0.5 (Unreleased)
+
+### Bug Fixes
+
+- Resolves a conflict where two instance of Slot would produce an inconsistent or duplicated rendering output.
+
 ## 7.0.4 (2018-12-12)
 
 ## 7.0.3 (2018-11-30)
