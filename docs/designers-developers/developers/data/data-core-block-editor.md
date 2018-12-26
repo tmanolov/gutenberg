@@ -776,6 +776,17 @@ Whether redo history exists.
 
 ## Actions
 
+### initBlocks
+
+Returns an action object used in signalling that blocks state should be
+intialized using a specified array of blocks,
+
+This action reset the undo/redo history
+
+*Parameters*
+
+ * blocks: Array of blocks.
+
 ### resetBlocks
 
 Returns an action object used in signalling that blocks state should be
@@ -1020,3 +1031,13 @@ Returns an action object used in signalling that undo history should pop.
 
 Returns an action object used in signalling that undo history record should
 be created.
+
+### __unstableSaveResuableBlock
+
+Returns an action object used in signalling that a temporary reusable blocks have been saved
+in order to switch its temporary id with the real id.
+
+*Parameters*
+
+ * id: Reusable block's id.
+ * updatedId: Updated block's id.

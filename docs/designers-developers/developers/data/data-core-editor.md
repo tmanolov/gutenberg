@@ -584,19 +584,6 @@ before state satisfies the given predicate function.
 
 Whether predicate matches for some history.
 
-### getBlockListSettings
-
-Returns the Block List settings of a block, if any exist.
-
-*Parameters*
-
- * state: Editor state.
- * clientId: Block client ID.
-
-*Returns*
-
-Block settings of the block if set.
-
 ### isPostLocked
 
 Returns whether the post is locked.
@@ -694,6 +681,18 @@ Return the current block list.
 
 Block list.
 
+### isEditorReady
+
+Is the editor ready
+
+*Parameters*
+
+ * state: null
+
+*Returns*
+
+is Ready.
+
 ## Actions
 
 ### setupEditor
@@ -741,7 +740,6 @@ Returns an action object used to setup the editor state when first opening an ed
 *Parameters*
 
  * post: Post object.
- * blocks: Array of blocks.
 
 ### editPost
 
