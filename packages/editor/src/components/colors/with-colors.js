@@ -43,7 +43,7 @@ export default ( ...args ) => {
 	return createHigherOrderComponent(
 		compose( [
 			withSelect( ( select ) => {
-				const settings = select( 'core/editor' ).getEditorSettings();
+				const settings = select( 'core/block-editor' ).getEditorSettings();
 				return {
 					colors: get( settings, [ 'colors' ], DEFAULT_COLORS ),
 				};

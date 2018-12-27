@@ -32,7 +32,7 @@ const BlockDraggable = ( { children, clientId, rootClientId, blockElementId, ind
 };
 
 export default withSelect( ( select, { clientId } ) => {
-	const { getBlockIndex, getBlockRootClientId } = select( 'core/editor' );
+	const { getBlockIndex, getBlockRootClientId } = select( 'core/block-editor' );
 	return {
 		index: getBlockIndex( clientId ),
 		rootClientId: getBlockRootClientId( clientId ),

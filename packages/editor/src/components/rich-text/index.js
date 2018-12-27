@@ -936,7 +936,9 @@ const RichTextContainer = compose( [
 		};
 	} ),
 	withSelect( ( select ) => {
-		const { canUserUseUnfilteredHTML, isCaretWithinFormattedText } = select( 'core/editor' );
+		// This should probably be moved to the block editor settings.
+		const { canUserUseUnfilteredHTML } = select( 'core/editor' );
+		const { isCaretWithinFormattedText } = select( 'core/block-editor' );
 		const { getFormatTypes } = select( 'core/rich-text' );
 
 		return {
@@ -952,7 +954,7 @@ const RichTextContainer = compose( [
 			undo,
 			enterFormattedText,
 			exitFormattedText,
-		} = dispatch( 'core/editor' );
+		} = dispatch( 'core/block-editor' );
 
 		return {
 			onCreateUndoLevel: createUndoLevel,

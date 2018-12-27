@@ -31,10 +31,8 @@ export function ReusableBlockDeleteButton( { reusableBlock, onDelete } ) {
 
 export default compose( [
 	withSelect( ( select, { clientId } ) => {
-		const {
-			getBlock,
-			__experimentalGetReusableBlock: getReusableBlock,
-		} = select( 'core/editor' );
+		const { getBlock } = select( 'core/editor' );
+		const { __experimentalGetReusableBlock: getReusableBlock } = select( 'core/editor' );
 		const block = getBlock( clientId );
 		return {
 			reusableBlock: block && isReusableBlock( block ) ? getReusableBlock( block.attributes.ref ) : null,

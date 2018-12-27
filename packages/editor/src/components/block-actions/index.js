@@ -36,7 +36,7 @@ export default compose( [
 			getBlockIndex,
 			getTemplateLock,
 			getBlockRootClientId,
-		} = select( 'core/editor' );
+		} = select( 'core/block-editor' );
 
 		const blocks = getBlocksByClientId( props.clientIds );
 		const canDuplicate = every( blocks, ( block ) => {
@@ -70,7 +70,7 @@ export default compose( [
 			multiSelect,
 			removeBlocks,
 			insertDefaultBlock,
-		} = dispatch( 'core/editor' );
+		} = dispatch( 'core/block-editor' );
 
 		return {
 			onDuplicate() {

@@ -7,6 +7,7 @@ import '@wordpress/notices';
 import '@wordpress/nux';
 import '@wordpress/rich-text';
 import '@wordpress/viewport';
+import '@wordpress/block-editor';
 
 /**
  * Internal dependencies

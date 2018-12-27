@@ -213,7 +213,7 @@ export default compose( [
 			isMultiSelecting,
 			getMultiSelectedBlocksStartClientId,
 			getMultiSelectedBlocksEndClientId,
-		} = select( 'core/editor' );
+		} = select( 'core/block-editor' );
 		const { rootClientId } = ownProps;
 
 		return {
@@ -229,7 +229,7 @@ export default compose( [
 			startMultiSelect,
 			stopMultiSelect,
 			multiSelect,
-		} = dispatch( 'core/editor' );
+		} = dispatch( 'core/block-editor' );
 
 		return {
 			onStartMultiSelect: startMultiSelect,

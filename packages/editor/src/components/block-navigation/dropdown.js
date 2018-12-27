@@ -49,6 +49,6 @@ function BlockNavigationDropdown( { hasBlocks } ) {
 
 export default withSelect( ( select ) => {
 	return {
-		hasBlocks: !! select( 'core/editor' ).getBlockCount(),
+		hasBlocks: !! select( 'core/block-editor' ).getBlockCount(),
 	};
 } )( BlockNavigationDropdown );

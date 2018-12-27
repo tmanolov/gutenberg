@@ -355,7 +355,7 @@ export default compose( [
 			getLastMultiSelectedBlockClientId,
 			hasMultiSelection,
 			getBlockOrder,
-		} = select( 'core/editor' );
+		} = select( 'core/block-editor' );
 
 		const selectedBlockClientId = getSelectedBlockClientId();
 		const selectionStartClientId = getMultiSelectedBlocksStartClientId();
@@ -373,7 +373,7 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
-		const { multiSelect, selectBlock } = dispatch( 'core/editor' );
+		const { multiSelect, selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			onMultiSelect: multiSelect,
 			onSelectBlock: selectBlock,

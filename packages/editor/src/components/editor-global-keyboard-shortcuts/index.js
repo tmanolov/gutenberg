@@ -152,10 +152,14 @@ export default compose( [
 			getBlockOrder,
 			getMultiSelectedBlockClientIds,
 			hasMultiSelection,
-			isEditedPostDirty,
 			getBlockRootClientId,
 			getTemplateLock,
 			getSelectedBlockClientId,
+		} = select( 'core/block-editor' );
+		// This component should probably be split into to
+		// A block editor specific one and a post editor one.
+		const {
+			isEditedPostDirty,
 		} = select( 'core/editor' );
 		const selectedBlockClientId = getSelectedBlockClientId();
 		const selectedBlockClientIds = selectedBlockClientId ? [ selectedBlockClientId ] : getMultiSelectedBlockClientIds();
@@ -178,6 +182,8 @@ export default compose( [
 			redo,
 			undo,
 			removeBlocks,
+		} = dispatch( 'core/block-editor' );
+		const {
 			savePost,
 		} = dispatch( 'core/editor' );
 

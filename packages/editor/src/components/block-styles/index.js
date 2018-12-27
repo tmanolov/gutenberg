@@ -128,7 +128,7 @@ function BlockStyles( {
 
 export default compose( [
 	withSelect( ( select, { clientId } ) => {
-		const { getBlock } = select( 'core/editor' );
+		const { getBlock } = select( 'core/block-editor' );
 		const { getBlockStyles } = select( 'core/blocks' );
 		const block = getBlock( clientId );
 
@@ -142,7 +142,7 @@ export default compose( [
 	withDispatch( ( dispatch, { clientId } ) => {
 		return {
 			onChangeClassName( newClassName ) {
-				dispatch( 'core/editor' ).updateBlockAttributes( clientId, {
+				dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
 					className: newClassName,
 				} );
 			},

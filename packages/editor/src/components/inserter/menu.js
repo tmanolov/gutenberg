@@ -347,11 +347,10 @@ export class InserterMenu extends Component {
 export default compose(
 	withSelect( ( select, { rootClientId } ) => {
 		const {
-			getEditedPostAttribute,
 			getSelectedBlock,
 			getInserterItems,
 			getBlockName,
-		} = select( 'core/editor' );
+		} = select( 'core/block-editor' );
 		const {
 			getChildBlockNames,
 		} = select( 'core/blocks' );
@@ -361,16 +360,19 @@ export default compose(
 		return {
 			selectedBlock: getSelectedBlock(),
 			rootChildBlocks: getChildBlockNames( rootBlockName ),
-			title: getEditedPostAttribute( 'title' ),
 			items: getInserterItems( rootClientId ),
 			rootClientId,
 		};
 	} ),
 	withDispatch( ( dispatch, ownProps ) => {
 		const {
-			__experimentalFetchReusableBlocks: fetchReusableBlocks,
 			showInsertionPoint,
 			hideInsertionPoint,
+		} = dispatch( 'core/block-editor' );
+
+		// This should be an external action provided in the editor settings.
+		const {
+			__experimentalFetchReusableBlocks: fetchReusableBlocks,
 		} = dispatch( 'core/editor' );
 
 		return {
@@ -381,7 +383,7 @@ export default compose(
 				const {
 					replaceBlocks,
 					insertBlock,
-				} = dispatch( 'core/editor' );
+				} = dispatch( 'core/block-editor' );
 				const { selectedBlock, index, rootClientId } = ownProps;
 				const { name, initialAttributes } = item;
 
