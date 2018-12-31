@@ -17,6 +17,7 @@ import {
 	receiveThemeSupports,
 	receiveEmbedPreview,
 	receiveUploadPermissions,
+	resetAutosave,
 } from './actions';
 import { getKindEntities } from './entities';
 import { apiFetch } from './controls';
@@ -117,4 +118,16 @@ export function* hasUploadPermissions() {
 	}
 
 	yield receiveUploadPermissions( includes( allowHeader, 'POST' ) );
+}
+
+/**
+ * Request autosave data from the REST API.
+ *
+ * @param {number} postId The id of the post to retrieve the autosave for.
+ */
+export function* getAutosave( postId ) {
+	const autosaveResponse = yield apiFetch( { path: `/wp/v2/posts/${ postId }/autosaves?context=edit` } );
+	if ( autosaveResponse && autosaveResponse[ 0 ] ) {
+		yield resetAutosave( postId, autosaveResponse[ 0 ] );
+	}
 }

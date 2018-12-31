@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import { getEntityRecord, getEntityRecords, getEmbedPreview } from '../resolvers';
-import { receiveEntityRecords, receiveEmbedPreview } from '../actions';
+import { getEntityRecord, getEntityRecords, getEmbedPreview, getAutosave } from '../resolvers';
+import { receiveEntityRecords, receiveEmbedPreview, resetAutosave } from '../actions';
 
 describe( 'getEntityRecord', () => {
 	const POST_TYPE = { slug: 'post' };
@@ -68,3 +68,30 @@ describe( 'getEmbedPreview', () => {
 		expect( received ).toEqual( receiveEmbedPreview( UNEMBEDDABLE_URL, UNEMBEDDABLE_RESPONSE ) );
 	} );
 } );
+
+describe( 'getAutosave', () => {
+	const SUCCESSFUL_RESPONSE = [ {
+		title: 'test title',
+		excerpt: 'test excerpt',
+		content: 'test content',
+	} ];
+
+	it( 'yields with fetched autosave post', async () => {
+		const fulfillment = getAutosave( 1 );
+		// Trigger generator
+		fulfillment.next();
+		// Provide apiFetch response and trigger Action
+		const received = ( await fulfillment.next( SUCCESSFUL_RESPONSE ) ).value;
+		expect( received ).toEqual( resetAutosave( 1, SUCCESSFUL_RESPONSE[ 0 ] ) );
+	} );
+
+	it( 'yields undefined if no autosave existings for the post', async () => {
+		const fulfillment = getAutosave( 1 );
+		// Trigger generator
+		fulfillment.next();
+		// Provide apiFetch response and trigger Action
+		const received = ( await fulfillment.next( [] ) ).value;
+		expect( received ).toBeUndefined();
+	} );
+} );
+
