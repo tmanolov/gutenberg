@@ -1,3 +1,9 @@
+## 9.1.0 (Unreleased)
+
+### New feature
+
+- Added new `EditorSaveKeyboardShortcut` component, which was refactored out from the `EditorGlobalKeyboardShortcuts` component.
+
 ## 9.0.6 (2018-12-18)
 
 ### Bug Fixes

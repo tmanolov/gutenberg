@@ -16,6 +16,7 @@ import { compose } from '@wordpress/compose';
  * Internal dependencies
  */
 import BlockActions from '../block-actions';
+import EditorSaveKeyboardShortcut from './editor-save-keyboard-shortcut';
 
 const preventDefault = ( event ) => {
 	event.preventDefault();
@@ -47,7 +48,6 @@ class EditorGlobalKeyboardShortcuts extends Component {
 
 		this.selectAll = this.selectAll.bind( this );
 		this.undoOrRedo = this.undoOrRedo.bind( this );
-		this.save = this.save.bind( this );
 		this.deleteSelectedBlocks = this.deleteSelectedBlocks.bind( this );
 		this.clearMultiSelection = this.clearMultiSelection.bind( this );
 	}
@@ -68,11 +68,6 @@ class EditorGlobalKeyboardShortcuts extends Component {
 		}
 
 		event.preventDefault();
-	}
-
-	save( event ) {
-		event.preventDefault();
-		this.props.onSave();
 	}
 
 	deleteSelectedBlocks( event ) {
@@ -110,12 +105,7 @@ class EditorGlobalKeyboardShortcuts extends Component {
 						escape: this.clearMultiSelection,
 					} }
 				/>
-				<KeyboardShortcuts
-					bindGlobal
-					shortcuts={ {
-						[ rawShortcut.primary( 's' ) ]: this.save,
-					} }
-				/>
+				<EditorSaveKeyboardShortcut />
 				{ selectedBlockClientIds.length > 0 && (
 					<BlockActions clientIds={ selectedBlockClientIds }>
 						{ ( { onDuplicate, onRemove, onInsertAfter, onInsertBefore } ) => (
@@ -152,7 +142,6 @@ export default compose( [
 			getBlockOrder,
 			getMultiSelectedBlockClientIds,
 			hasMultiSelection,
-			isEditedPostDirty,
 			getBlockRootClientId,
 			getTemplateLock,
 			getSelectedBlockClientId,
@@ -167,34 +156,19 @@ export default compose( [
 				selectedBlockClientIds,
 				( clientId ) => !! getTemplateLock( getBlockRootClientId( clientId ) )
 			),
-			isDirty: isEditedPostDirty(),
 			selectedBlockClientIds,
 		};
 	} ),
-	withDispatch( ( dispatch, ownProps ) => {
+	withDispatch( ( dispatch ) => {
 		const {
 			clearSelectedBlock,
 			multiSelect,
 			redo,
 			undo,
 			removeBlocks,
-			savePost,
 		} = dispatch( 'core/editor' );
 
 		return {
-			onSave() {
-				// TODO: This should be handled in the `savePost` effect in
-				// considering `isSaveable`. See note on `isEditedPostSaveable`
-				// selector about dirtiness and meta-boxes. When removing, also
-				// remember to remove `isDirty` prop passing from `withSelect`.
-				//
-				// See: `isEditedPostSaveable`
-				if ( ! ownProps.isDirty ) {
-					return;
-				}
-
-				savePost();
-			},
 			clearSelectedBlock,
 			onMultiSelect: multiSelect,
 			onRedo: redo,

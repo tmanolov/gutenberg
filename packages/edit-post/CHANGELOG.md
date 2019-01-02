@@ -1,3 +1,8 @@
+## 3.1.7 (Unreleased)
+
+### Bug Fixes
+ - Fix 'save' keyboard shortcut not function in the Code Editor.
+
 ## 3.1.6 (2018-12-18)
 
 ## 3.1.5 (2018-12-12)
