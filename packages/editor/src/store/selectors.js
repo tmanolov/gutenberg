@@ -503,10 +503,10 @@ export function isEditedPostEmpty( state ) {
  * @return {boolean} Whether the post can be autosaved.
  */
 export function isEditedPostAutosaveable( state, autosave ) {
-	if ( autosave === undefined ) {
-		deprecated( '`isEditedPostAutosaveable` selector now requires the argument `autosave` to be provided', {
+	if ( arguments.length === 1 ) {
+		deprecated( '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable()`', {
+			alternative: '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable( autosave )`',
 			plugin: 'Gutenberg',
-			hint: 'This warning may be displayed incorrectly when the `autosave` argument is used, but the value of the autosave is legitimately undefined',
 		} );
 
 		const postId = getCurrentPostId( state );
