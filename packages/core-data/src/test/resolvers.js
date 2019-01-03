@@ -77,18 +77,38 @@ describe( 'getAutosave', () => {
 	} ];
 
 	it( 'yields with fetched autosave post', async () => {
-		const fulfillment = getAutosave( 1 );
+		const id = 1;
+		const baseURL = '/wp/v2/posts';
+		const postEntity = { name: 'post', kind: 'postType', baseURL };
+		const fulfillment = getAutosave( { id, type: 'post' } );
+
 		// Trigger generator
 		fulfillment.next();
+
+		// Trigger generator with the postEntity and assert that correct path is formed
+		// in the apiFetch request.
+		const { value: apiFetchAction } = fulfillment.next( postEntity );
+		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
+
 		// Provide apiFetch response and trigger Action
 		const received = ( await fulfillment.next( SUCCESSFUL_RESPONSE ) ).value;
 		expect( received ).toEqual( resetAutosave( 1, SUCCESSFUL_RESPONSE[ 0 ] ) );
 	} );
 
 	it( 'yields undefined if no autosave existings for the post', async () => {
-		const fulfillment = getAutosave( 1 );
+		const id = 1;
+		const baseURL = '/wp/v2/posts';
+		const entities = { name: 'post', kind: 'postType', baseURL };
+		const fulfillment = getAutosave( { id, type: 'post' } );
+
 		// Trigger generator
 		fulfillment.next();
+
+		// Trigger generator with the postEntity and assert that correct path is formed
+		// in the apiFetch request.
+		const { value: apiFetchAction } = fulfillment.next( entities );
+		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
+
 		// Provide apiFetch response and trigger Action
 		const received = ( await fulfillment.next( [] ) ).value;
 		expect( received ).toBeUndefined();

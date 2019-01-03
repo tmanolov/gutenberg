@@ -45,14 +45,14 @@ export default compose( [
 			isEditedPostAutosaveable,
 			getEditorSettings,
 			getReferenceByDistinctEdits,
-			getCurrentPostId,
+			getCurrentPost,
 		} = select( 'core/editor' );
 		const {
 			getAutosave,
 		} = select( 'core' );
 
-		const postId = getCurrentPostId();
-		const autosave = getAutosave( postId );
+		const currentPost = getCurrentPost();
+		const autosave = getAutosave( currentPost );
 		const { autosaveInterval } = getEditorSettings();
 
 		return {

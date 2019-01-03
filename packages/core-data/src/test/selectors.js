@@ -124,7 +124,7 @@ describe( 'isPreviewEmbedFallback()', () => {
 describe( 'hasAutosave', () => {
 	it( 'returns false if there is no autosave', () => {
 		const state = { autosave: {} };
-		const result = hasAutosave( state, 1 );
+		const result = hasAutosave( state, { id: 1 } );
 
 		expect( result ).toBe( false );
 	} );
@@ -137,7 +137,7 @@ describe( 'hasAutosave', () => {
 			},
 		};
 
-		const result = hasAutosave( state, postId );
+		const result = hasAutosave( state, { id: postId } );
 
 		expect( result ).toBe( true );
 	} );
@@ -152,7 +152,7 @@ describe( 'getAutosave', () => {
 			},
 		};
 
-		const result = getAutosave( state, 2 );
+		const result = getAutosave( state, { id: 2 } );
 
 		expect( result ).toBeUndefined();
 	} );
@@ -166,7 +166,7 @@ describe( 'getAutosave', () => {
 			},
 		};
 
-		const result = getAutosave( state, postId );
+		const result = getAutosave( state, { id: postId } );
 
 		expect( result ).toEqual( autosave );
 	} );
@@ -178,7 +178,7 @@ describe( 'getAutosaveAttribute', () => {
 			autosave: {},
 		};
 
-		expect( getAutosaveAttribute( state, 1, 'title' ) ).toBeUndefined();
+		expect( getAutosaveAttribute( state, { id: 1 }, 'title' ) ).toBeUndefined();
 	} );
 
 	it( 'returns undefined for an attribute which is not set', () => {
@@ -190,7 +190,7 @@ describe( 'getAutosaveAttribute', () => {
 			},
 		};
 
-		expect( getAutosaveAttribute( state, postId, 'foo' ) ).toBeUndefined();
+		expect( getAutosaveAttribute( state, { id: postId }, 'foo' ) ).toBeUndefined();
 	} );
 
 	it( 'returns undefined for object prototype member', () => {
@@ -201,7 +201,7 @@ describe( 'getAutosaveAttribute', () => {
 			},
 		};
 
-		expect( getAutosaveAttribute( state, postId, 'valueOf' ) ).toBeUndefined();
+		expect( getAutosaveAttribute( state, { id: postId }, 'valueOf' ) ).toBeUndefined();
 	} );
 
 	it( 'returns the attribute value', () => {
@@ -215,6 +215,6 @@ describe( 'getAutosaveAttribute', () => {
 			},
 		};
 
-		expect( getAutosaveAttribute( state, postId, 'title' ) ).toBe( autosave.title );
+		expect( getAutosaveAttribute( state, { id: postId }, 'title' ) ).toBe( autosave.title );
 	} );
 } );

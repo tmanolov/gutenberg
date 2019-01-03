@@ -156,7 +156,7 @@ null if there is no autosave for the post.
 *Parameters*
 
  * state: State tree.
- * postId: The post id.
+ * post: The post that is parent to the autosave.
  * attributeName: Autosave attribute name.
 
 *Returns*
@@ -170,7 +170,7 @@ Returns the autosave associated with the provided postId.
 *Parameters*
 
  * state: State tree.
- * postId: The post id.
+ * post: The post that is parent to the autosave.
 
 *Returns*
 
@@ -183,7 +183,7 @@ Returns the true if there is an autosave for the given post id, otherwise false.
 *Parameters*
 
  * state: State tree.
- * postId: The post id.
+ * post: The post that is parent to the autosave.
 
 *Returns*
 

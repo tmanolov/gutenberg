@@ -186,17 +186,17 @@ export function hasUploadPermissions( state ) {
  * null if there is no autosave for the post.
  *
  * @param {Object} state         State tree.
- * @param {number} postId        The post id.
+ * @param {Object} post          The post that is parent to the autosave.
  * @param {string} attributeName Autosave attribute name.
  *
  * @return {*} Autosave attribute value.
  */
-export function getAutosaveAttribute( state, postId, attributeName ) {
-	if ( ! hasAutosave( state, postId ) ) {
+export function getAutosaveAttribute( state, post, attributeName ) {
+	if ( ! hasAutosave( state, post ) ) {
 		return;
 	}
 
-	const autosave = getAutosave( state, postId );
+	const autosave = getAutosave( state, post );
 	if ( autosave.hasOwnProperty( attributeName ) ) {
 		return autosave[ attributeName ];
 	}
@@ -205,25 +205,25 @@ export function getAutosaveAttribute( state, postId, attributeName ) {
 /**
  * Returns the autosave associated with the provided postId.
  *
- * @param {Object} state  State tree.
- * @param {number} postId The post id.
+ * @param {Object} state State tree.
+ * @param {Object} post  The post that is parent to the autosave.
  *
  * @return {?Object} The autosave object, if it exists.
  */
-export function getAutosave( state, postId ) {
+export function getAutosave( state, post ) {
 	if ( state.autosave ) {
-		return state.autosave[ postId ];
+		return state.autosave[ post.id ];
 	}
 }
 
 /**
  * Returns the true if there is an autosave for the given post id, otherwise false.
  *
- * @param {Object} state  State tree.
- * @param {number} postId The post id.
+ * @param {Object} state State tree.
+ * @param {Object} post  The post that is parent to the autosave.
  *
  * @return {boolean} Whether there is an existing autosave.
  */
-export function hasAutosave( state, postId ) {
-	return !! getAutosave( state, postId );
+export function hasAutosave( state, post ) {
+	return !! getAutosave( state, post );
 }

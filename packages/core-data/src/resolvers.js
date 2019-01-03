@@ -20,7 +20,7 @@ import {
 	resetAutosave,
 } from './actions';
 import { getKindEntities } from './entities';
-import { apiFetch } from './controls';
+import { apiFetch, select } from './controls';
 
 /**
  * Requests authors from the REST API.
@@ -123,11 +123,14 @@ export function* hasUploadPermissions() {
 /**
  * Request autosave data from the REST API.
  *
- * @param {number} postId The id of the post to retrieve the autosave for.
+ * @param {Object} post The post that is the parent of the autosave
  */
-export function* getAutosave( postId ) {
-	const autosaveResponse = yield apiFetch( { path: `/wp/v2/posts/${ postId }/autosaves?context=edit` } );
+export function* getAutosave( post ) {
+	const { id, type } = post;
+	const { baseURL } = yield select( 'getEntity', 'postType', type );
+	const autosaveResponse = yield apiFetch( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
+
 	if ( autosaveResponse && autosaveResponse[ 0 ] ) {
-		yield resetAutosave( postId, autosaveResponse[ 0 ] );
+		yield resetAutosave( id, autosaveResponse[ 0 ] );
 	}
 }
