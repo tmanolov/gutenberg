@@ -110,6 +110,7 @@ class ParagraphEdit extends Component {
 					onMerge={ mergeBlocks }
 					onContentSizeChange={ ( event ) => {
 						this.setState( { aztecHeight: event.aztecHeight } );
+						this.props.handleContentSizeChange( event.reactNodeId, event.aztecHeight);
 					} }
 					placeholder={ placeholder || __( 'Add text or type / to add content' ) }
 				/>

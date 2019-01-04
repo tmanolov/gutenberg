@@ -191,10 +191,11 @@ export class RichText extends Component {
 	 * Handles any case where the content of the AztecRN instance has changed in size
 	 */
 
-	onContentSizeChange( contentSize ) {
-		const contentHeight = contentSize.height;
+	onContentSizeChange( event ) {
+		const contentHeight = event.height;
 		this.forceUpdate(); // force re-render the component skipping shouldComponentUpdate() See: https://reactjs.org/docs/react-component.html#forceupdate
 		this.props.onContentSizeChange( {
+			reactNodeId: event.target,
 			aztecHeight: contentHeight,
 		}
 		);
