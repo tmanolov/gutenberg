@@ -7,7 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { sprintf, __ } from '@wordpress/i18n';
-import { Component, createRef, Fragment } from '@wordpress/element';
+import { Component, createRef } from '@wordpress/element';
 import {
 	ExternalLink,
 	IconButton,
@@ -108,7 +108,7 @@ const LinkViewer = ( { url, editLink } ) => {
 };
 
 class InlineLinkUI extends Component {
-	constructor( { activeAttributes } ) {
+	constructor( props ) {
 		super( ...arguments );
 
 		this.editLink = this.editLink.bind( this );
@@ -118,10 +118,11 @@ class InlineLinkUI extends Component {
 		this.setLinkTarget = this.setLinkTarget.bind( this );
 		this.onClickOutside = this.onClickOutside.bind( this );
 		this.resetState = this.resetState.bind( this );
+		this.setLinkAttributes = this.setLinkAttributes.bind( this );
 		this.autocompleteRef = createRef();
 
 		this.state = {
-			attributes: activeAttributes,
+			attributes: props.activeAttributes,
 			inputValue: '',
 		};
 	}
@@ -269,6 +270,7 @@ class InlineLinkUI extends Component {
 
 		const { inputValue } = this.state;
 		const showInput = isShowingInput( this.props, this.state );
+		const selectedText = getTextContent( slice( value ) );
 
 		return (
 			<PositionedAtSelection
@@ -278,8 +280,9 @@ class InlineLinkUI extends Component {
 					onClickOutside={ this.onClickOutside }
 					onClose={ this.resetState }
 					focusOnMount={ showInput ? 'firstElement' : false }
+					className="editor-format-toolbar__link-settings-container"
 					renderSettings={ () => (
-						<Fragment>
+						<div className="editor-format-toolbar__link-settings-container">
 							<ToggleControl
 								label={ __( 'Open in New Tab' ) }
 								checked={ this.state.attributes.target === '_blank' }
@@ -288,11 +291,13 @@ class InlineLinkUI extends Component {
 							<Slot
 								name="LinkSettings"
 								fillProps={ {
+									url: url,
+									text: selectedText,
 									attributes: this.state.attributes,
 									setLinkAttributes: this.setLinkAttributes,
 								} }
 							/>
-						</Fragment>
+						</div>
 					) }
 				>
 					{ showInput ? (
