@@ -13,6 +13,7 @@ import {
 	IconButton,
 	ToggleControl,
 	withSpokenMessages,
+	Slot,
 } from '@wordpress/components';
 import { LEFT, RIGHT, UP, DOWN, BACKSPACE, ENTER } from '@wordpress/keycodes';
 import { prependHTTP, safeDecodeURI, filterURLForDisplay } from '@wordpress/url';
@@ -283,6 +284,13 @@ class InlineLinkUI extends Component {
 								label={ __( 'Open in New Tab' ) }
 								checked={ this.state.attributes.target === '_blank' }
 								onChange={ this.setLinkTarget }
+							/>
+							<Slot
+								name="LinkSettings"
+								fillProps={ {
+									attributes: this.state.attributes,
+									setLinkAttributes: this.setLinkAttributes,
+								} }
 							/>
 						</Fragment>
 					) }
