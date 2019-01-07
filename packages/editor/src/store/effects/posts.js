@@ -133,7 +133,7 @@ export const requestPostUpdate = async ( action, store ) => {
 	try {
 		const newPost = await request;
 		if ( isAutosave ) {
-			dataDispatch( 'core' ).resetAutosave( post.id, newPost );
+			dataDispatch( 'core' ).receiveAutosave( post.id, newPost );
 		} else {
 			dispatch( resetPost( newPost ) );
 		}

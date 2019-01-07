@@ -256,7 +256,7 @@ Returns an action object used in signalling that Upload permissions have been re
 
  * hasUploadPermissions: Does the user have permission to upload files?
 
-### resetAutosave
+### receiveAutosave
 
 Returns an action object used in signalling that the latest autosave of the
 post has been received, by initialization or autosave.

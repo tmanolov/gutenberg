@@ -17,7 +17,7 @@ import {
 	receiveThemeSupports,
 	receiveEmbedPreview,
 	receiveUploadPermissions,
-	resetAutosave,
+	receiveAutosave,
 } from './actions';
 import { getKindEntities } from './entities';
 import { apiFetch, select } from './controls';
@@ -131,6 +131,6 @@ export function* getAutosave( post ) {
 	const autosaveResponse = yield apiFetch( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
 
 	if ( autosaveResponse && autosaveResponse[ 0 ] ) {
-		yield resetAutosave( id, autosaveResponse[ 0 ] );
+		yield receiveAutosave( id, autosaveResponse[ 0 ] );
 	}
 }

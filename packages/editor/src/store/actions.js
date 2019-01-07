@@ -52,12 +52,12 @@ export function resetPost( post ) {
  */
 export function resetAutosave( newAutosave ) {
 	deprecated( 'resetAutosave action (`core/editor` store)', {
-		alternative: 'resetAutosave action (`core` store)',
+		alternative: 'receiveAutosave action (`core` store)',
 		plugin: 'Gutenberg',
 	} );
 
 	const postId = select( 'core' ).getCurrentPostId();
-	dispatch( 'core' ).resetAutosave( newAutosave, postId );
+	dispatch( 'core' ).receiveAutosave( newAutosave, postId );
 
 	return { type: '__INERT__' };
 }

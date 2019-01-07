@@ -244,7 +244,7 @@ export function hasUploadPermissions( state = true, action ) {
  */
 export function autosave( state = {}, action ) {
 	switch ( action.type ) {
-		case 'RESET_AUTOSAVE':
+		case 'RECEIVE_AUTOSAVE':
 			const { postId, autosave: autosavePost } = action;
 			const [ title, excerpt, content ] = [
 				'title',

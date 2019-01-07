@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { getEntityRecord, getEntityRecords, getEmbedPreview, getAutosave } from '../resolvers';
-import { receiveEntityRecords, receiveEmbedPreview, resetAutosave } from '../actions';
+import { receiveEntityRecords, receiveEmbedPreview, receiveAutosave } from '../actions';
 
 describe( 'getEntityRecord', () => {
 	const POST_TYPE = { slug: 'post' };
@@ -92,7 +92,7 @@ describe( 'getAutosave', () => {
 
 		// Provide apiFetch response and trigger Action
 		const received = ( await fulfillment.next( SUCCESSFUL_RESPONSE ) ).value;
-		expect( received ).toEqual( resetAutosave( 1, SUCCESSFUL_RESPONSE[ 0 ] ) );
+		expect( received ).toEqual( receiveAutosave( 1, SUCCESSFUL_RESPONSE[ 0 ] ) );
 	} );
 
 	it( 'yields undefined if no autosave existings for the post', async () => {
