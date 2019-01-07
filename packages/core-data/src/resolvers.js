@@ -123,7 +123,7 @@ export function* hasUploadPermissions() {
 /**
  * Request autosave data from the REST API.
  *
- * @param {Object} post The post that is the parent of the autosave
+ * @param {Object} post The post that is the parent of the autosave.
  */
 export function* getAutosave( post ) {
 	const { id, type } = post;

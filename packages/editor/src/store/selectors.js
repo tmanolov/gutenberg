@@ -324,14 +324,17 @@ export function getEditedPostAttribute( state, attributeName ) {
  * Returns an attribute value of the current autosave revision for a post, or
  * null if there is no autosave for the post.
  *
+ * @deprecated since 4.9. Callers should use the `getAutosaveAttribute( post, attributeName )`
+ * 			   selector from the '@wordpress/core-data' package.
+ *
  * @param {Object} state         Global application state.
  * @param {string} attributeName Autosave attribute name.
  *
  * @return {*} Autosave attribute value.
  */
 export function getAutosaveAttribute( state, attributeName ) {
-	deprecated( 'getAutosaveAttribute selector (`core/editor` store)', {
-		alternative: 'getAutosaveAttribute selector (`core` store)',
+	deprecated( '`wp.data.select( \'core/editor\' ).getAutosaveAttribute( attributeName )`', {
+		alternative: '`wp.data.select( \'core\' ).getAutosaveAttribute( post, attributeName )`',
 		plugin: 'Gutenberg',
 	} );
 
@@ -505,7 +508,7 @@ export function isEditedPostEmpty( state ) {
 export function isEditedPostAutosaveable( state, autosave ) {
 	if ( arguments.length === 1 ) {
 		deprecated( '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable()`', {
-			alternative: '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable( autosave )`',
+			alternative: '`wp.data.select( \'core\' ).isEditedPostAutosaveable( autosave )`',
 			plugin: 'Gutenberg',
 		} );
 
@@ -542,13 +545,16 @@ export function isEditedPostAutosaveable( state, autosave ) {
  * has yet to be autosaved, or has been saved or published since the last
  * autosave).
  *
+ * @deprecated since 4.9. Callers should use the `getAutosave( post )`
+ * 			   selector from the '@wordpress/core-data' package.
+ *
  * @param {Object} state Editor state.
  *
  * @return {?Object} Current autosave, if exists.
  */
 export function getAutosave( state ) {
-	deprecated( 'getAutosave selector (`core/editor` store)', {
-		alternative: 'getAutosave selector (`core` store)',
+	deprecated( '`wp.data.select( \'core/editor\' ).getAutosave()`', {
+		alternative: '`wp.data.select( \'core\' ).getAutosave( post )`',
 		plugin: 'Gutenberg',
 	} );
 
@@ -559,13 +565,16 @@ export function getAutosave( state ) {
 /**
  * Returns the true if there is an existing autosave, otherwise false.
  *
+ * @deprecated since 4.9. Callers should use the `hasAutosave( post )`
+ * 			   selector from the '@wordpress/core-data' package.
+ *
  * @param {Object} state Global application state.
  *
  * @return {boolean} Whether there is an existing autosave.
  */
 export function hasAutosave( state ) {
-	deprecated( 'hasAutosave selector (`core/editor` store)', {
-		alternative: 'hasAutosave selector (`core` store)',
+	deprecated( '`wp.data.select( \'core/editor\' ).hasAutosave()`', {
+		alternative: '`wp.data.select( \'core\' ).hasAutosave( post )`',
 		plugin: 'Gutenberg',
 	} );
 

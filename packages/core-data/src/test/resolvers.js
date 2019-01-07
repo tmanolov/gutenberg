@@ -95,7 +95,7 @@ describe( 'getAutosave', () => {
 		expect( received ).toEqual( receiveAutosave( 1, SUCCESSFUL_RESPONSE[ 0 ] ) );
 	} );
 
-	it( 'yields undefined if no autosave existings for the post', async () => {
+	it( 'yields undefined if no autosave exists for the post', async () => {
 		const id = 1;
 		const baseURL = '/wp/v2/posts';
 		const entities = { name: 'post', kind: 'postType', baseURL };
