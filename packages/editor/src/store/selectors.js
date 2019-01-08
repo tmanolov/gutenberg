@@ -324,8 +324,9 @@ export function getEditedPostAttribute( state, attributeName ) {
  * Returns an attribute value of the current autosave revision for a post, or
  * null if there is no autosave for the post.
  *
- * @deprecated since 4.9. Callers should use the `getAutosaveAttribute( post, attributeName )`
- * 			   selector from the '@wordpress/core-data' package.
+ * @deprecated since 4.9. Callers should use the `getAutosave( post )` selector from the
+ *             '@wordpress/core-data' package and access properties on the returned
+ *             autosave object.
  *
  * @param {Object} state         Global application state.
  * @param {string} attributeName Autosave attribute name.
@@ -334,12 +335,20 @@ export function getEditedPostAttribute( state, attributeName ) {
  */
 export function getAutosaveAttribute( state, attributeName ) {
 	deprecated( '`wp.data.select( \'core/editor\' ).getAutosaveAttribute( attributeName )`', {
-		alternative: '`wp.data.select( \'core\' ).getAutosaveAttribute( post, attributeName )`',
+		alternative: '`const autosave = wp.data.select( \'core\' ).getAutosave( post ); const attribute = autosave ? autosave[ attribute ] : null`',
 		plugin: 'Gutenberg',
 	} );
 
-	const currentPost = getCurrentPost( state );
-	return select( 'core' ).getAutosaveAttribute( currentPost, attributeName );
+	const post = getCurrentPost( state );
+
+	if ( ! select( 'core' ).hasAutosave( post ) ) {
+		return null;
+	}
+
+	const autosave = select( 'core' ).getAutosave( post );
+	if ( autosave.hasOwnProperty( attributeName ) ) {
+		return autosave[ attributeName ];
+	}
 }
 
 /**

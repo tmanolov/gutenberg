@@ -13,7 +13,6 @@ import {
 	isPreviewEmbedFallback,
 	getAutosave,
 	hasAutosave,
-	getAutosaveAttribute,
 } from '../selectors';
 
 describe( 'getEntityRecord', () => {
@@ -169,52 +168,5 @@ describe( 'getAutosave', () => {
 		const result = getAutosave( state, { id: postId } );
 
 		expect( result ).toEqual( autosave );
-	} );
-} );
-
-describe( 'getAutosaveAttribute', () => {
-	it( 'returns undefined if there is no autosave', () => {
-		const state = {
-			autosave: {},
-		};
-
-		expect( getAutosaveAttribute( state, { id: 1 }, 'title' ) ).toBeUndefined();
-	} );
-
-	it( 'returns undefined for an attribute which is not set', () => {
-		const postId = 1;
-		const autosave = { bar: true };
-		const state = {
-			autosave: {
-				[ postId ]: autosave,
-			},
-		};
-
-		expect( getAutosaveAttribute( state, { id: postId }, 'foo' ) ).toBeUndefined();
-	} );
-
-	it( 'returns undefined for object prototype member', () => {
-		const postId = 1;
-		const state = {
-			autosave: {
-				[ postId ]: {},
-			},
-		};
-
-		expect( getAutosaveAttribute( state, { id: postId }, 'valueOf' ) ).toBeUndefined();
-	} );
-
-	it( 'returns the attribute value', () => {
-		const postId = 1;
-		const autosave = {
-			title: 'Hello World',
-		};
-		const state = {
-			autosave: {
-				[ postId ]: autosave,
-			},
-		};
-
-		expect( getAutosaveAttribute( state, { id: postId }, 'title' ) ).toBe( autosave.title );
 	} );
 } );
