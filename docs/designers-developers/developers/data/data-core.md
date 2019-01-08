@@ -155,7 +155,8 @@ Returns the autosave that is a child of the provided post, if one exists.
 *Parameters*
 
  * state: State tree.
- * post: The parent post of the autosave.
+ * postType: The type of the parent post.
+ * postId: The id of the parent post.
 
 *Returns*
 
@@ -168,7 +169,8 @@ Returns the true if there is an autosave for the given post, otherwise false.
 *Parameters*
 
  * state: State tree.
- * post: The parent post of the autosave.
+ * postType: The type of the parent post.
+ * postId: The id of the parent post.
 
 *Returns*
 
@@ -181,7 +183,8 @@ Returns true if the REST request for an autosave has completed.
 *Parameters*
 
  * state: State tree.
- * post: The parent post of the autosave.
+ * postType: The type of the parent post.
+ * postId: The id of the parent post.
 
 *Returns*
 

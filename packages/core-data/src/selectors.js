@@ -197,35 +197,38 @@ export function hasUploadPermissions( state ) {
 /**
  * Returns the autosave that is a child of the provided post, if one exists.
  *
- * @param {Object} state State tree.
- * @param {Object} post  The parent post of the autosave.
+ * @param {Object} state    State tree.
+ * @param {string} postType The type of the parent post.
+ * @param {number} postId   The id of the parent post.
  *
  * @return {?Object} The autosave object, or undefined if there is none.
  */
-export function getAutosave( state, post ) {
-	return state.autosave[ post.id ];
+export function getAutosave( state, postType, postId ) {
+	return state.autosave[ postId ];
 }
 
 /**
  * Returns the true if there is an autosave for the given post, otherwise false.
  *
  * @param {Object} state State tree.
- * @param {Object} post  The parent post of the autosave.
+ * @param {string} postType The type of the parent post.
+ * @param {number} postId   The id of the parent post.
  *
  * @return {boolean} Whether there is an existing autosave.
  */
-export function hasAutosave( state, post ) {
-	return !! getAutosave( state, post );
+export function hasAutosave( state, postType, postId ) {
+	return !! getAutosave( state, postType, postId );
 }
 
 /**
  * Returns true if the REST request for an autosave has completed.
  *
- * @param {*} state State tree.
- * @param {*} post  The parent post of the autosave.
+ * @param {Object} state State tree.
+ * @param {string} postType The type of the parent post.
+ * @param {number} postId   The id of the parent post.
  *
  * @return {boolean} True if the REST request was completed. False otherwise.
  */
-export function hasFetchedAutosave( state, post ) {
-	return hasFinishedResolution( 'getAutosave', post );
+export function hasFetchedAutosave( state, postType, postId ) {
+	return hasFinishedResolution( 'getAutosave', postType, postId );
 }

@@ -110,7 +110,7 @@ export const requestPostUpdate = async ( action, store ) => {
 		// post values as fallback if not otherwise included in edits.
 		toSend = {
 			...pick( post, [ 'title', 'content', 'excerpt' ] ),
-			...getAutosave( post ),
+			...getAutosave( post.type, post.id ),
 			...toSend,
 		};
 

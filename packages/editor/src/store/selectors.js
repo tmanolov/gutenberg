@@ -324,9 +324,8 @@ export function getEditedPostAttribute( state, attributeName ) {
  * Returns an attribute value of the current autosave revision for a post, or
  * null if there is no autosave for the post.
  *
- * @deprecated since 4.9. Callers should use the `getAutosave( post )` selector from the
- *             '@wordpress/core-data' package and access properties on the returned
- *             autosave object.
+ * @deprecated since 4.9. Callers should use the `getAutosave( postType, postId )` selector from the
+ *             '@wordpress/core-data' package and access properties on the returned autosave object.
  *
  * @param {Object} state         Global application state.
  * @param {string} attributeName Autosave attribute name.
@@ -339,13 +338,14 @@ export function getAutosaveAttribute( state, attributeName ) {
 		plugin: 'Gutenberg',
 	} );
 
-	const post = getCurrentPost( state );
+	const postType = getCurrentPostType( state );
+	const postId = getCurrentPostId( state );
 
-	if ( ! select( 'core' ).hasAutosave( post ) ) {
+	if ( ! select( 'core' ).hasAutosave( postType, postId ) ) {
 		return null;
 	}
 
-	const autosave = select( 'core' ).getAutosave( post );
+	const autosave = select( 'core' ).getAutosave( postType, postId );
 	if ( autosave.hasOwnProperty( attributeName ) ) {
 		return autosave[ attributeName ];
 	}
@@ -521,8 +521,9 @@ export function isEditedPostAutosaveable( state, autosave ) {
 			plugin: 'Gutenberg',
 		} );
 
-		const currentPost = getCurrentPost( state );
-		autosave = select( 'core' ).getAutosave( currentPost );
+		const postType = getCurrentPostType( state );
+		const postId = getCurrentPostId( state );
+		autosave = select( 'core' ).getAutosave( postType, postId );
 	}
 
 	// A post must contain a title, an excerpt, or non-empty content to be valid for autosaving.
@@ -554,7 +555,7 @@ export function isEditedPostAutosaveable( state, autosave ) {
  * has yet to be autosaved, or has been saved or published since the last
  * autosave).
  *
- * @deprecated since 4.9. Callers should use the `getAutosave( post )`
+ * @deprecated since 4.9. Callers should use the `getAutosave( postType, postId )`
  * 			   selector from the '@wordpress/core-data' package.
  *
  * @param {Object} state Editor state.
@@ -563,18 +564,19 @@ export function isEditedPostAutosaveable( state, autosave ) {
  */
 export function getAutosave( state ) {
 	deprecated( '`wp.data.select( \'core/editor\' ).getAutosave()`', {
-		alternative: '`wp.data.select( \'core\' ).getAutosave( post )`',
+		alternative: '`wp.data.select( \'core\' ).getAutosave( postType, postId )`',
 		plugin: 'Gutenberg',
 	} );
 
-	const currentPost = getCurrentPost( state );
-	return select( 'core' ).getAutosave( currentPost );
+	const postType = getCurrentPostType( state );
+	const postId = getCurrentPostId( state );
+	return select( 'core' ).getAutosave( postType, postId );
 }
 
 /**
  * Returns the true if there is an existing autosave, otherwise false.
  *
- * @deprecated since 4.9. Callers should use the `hasAutosave( post )`
+ * @deprecated since 4.9. Callers should use the `hasAutosave( postType, postId )`
  * 			   selector from the '@wordpress/core-data' package.
  *
  * @param {Object} state Global application state.
@@ -583,12 +585,13 @@ export function getAutosave( state ) {
  */
 export function hasAutosave( state ) {
 	deprecated( '`wp.data.select( \'core/editor\' ).hasAutosave()`', {
-		alternative: '`wp.data.select( \'core\' ).hasAutosave( post )`',
+		alternative: '`wp.data.select( \'core\' ).hasAutosave( postType, postId )`',
 		plugin: 'Gutenberg',
 	} );
 
-	const currentPost = getCurrentPost( state );
-	return select( 'core' ).hasAutosave( currentPost );
+	const postType = getCurrentPostType( state );
+	const postId = getCurrentPostId( state );
+	return select( 'core' ).hasAutosave( postType, postId );
 }
 
 /**

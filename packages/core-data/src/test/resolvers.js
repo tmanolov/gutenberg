@@ -77,10 +77,11 @@ describe( 'getAutosave', () => {
 	} ];
 
 	it( 'yields with fetched autosave post', async () => {
-		const id = 1;
+		const postType = 'post';
+		const postId = 1;
 		const baseURL = '/wp/v2/posts';
 		const postEntity = { name: 'post', kind: 'postType', baseURL };
-		const fulfillment = getAutosave( { id, type: 'post' } );
+		const fulfillment = getAutosave( postType, postId );
 
 		// Trigger generator
 		fulfillment.next();
@@ -88,7 +89,7 @@ describe( 'getAutosave', () => {
 		// Trigger generator with the postEntity and assert that correct path is formed
 		// in the apiFetch request.
 		const { value: apiFetchAction } = fulfillment.next( postEntity );
-		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
+		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ postId }/autosaves?context=edit` } );
 
 		// Provide apiFetch response and trigger Action
 		const received = ( await fulfillment.next( SUCCESSFUL_RESPONSE ) ).value;
@@ -96,10 +97,11 @@ describe( 'getAutosave', () => {
 	} );
 
 	it( 'yields undefined if no autosave exists for the post', async () => {
-		const id = 1;
+		const postType = 'post';
+		const postId = 1;
 		const baseURL = '/wp/v2/posts';
 		const entities = { name: 'post', kind: 'postType', baseURL };
-		const fulfillment = getAutosave( { id, type: 'post' } );
+		const fulfillment = getAutosave( postType, postId );
 
 		// Trigger generator
 		fulfillment.next();
@@ -107,7 +109,7 @@ describe( 'getAutosave', () => {
 		// Trigger generator with the postEntity and assert that correct path is formed
 		// in the apiFetch request.
 		const { value: apiFetchAction } = fulfillment.next( entities );
-		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ id }/autosaves?context=edit` } );
+		expect( apiFetchAction.request ).toEqual( { path: `${ baseURL }/${ postId }/autosaves?context=edit` } );
 
 		// Provide apiFetch response and trigger Action
 		const received = ( await fulfillment.next( [] ) ).value;
