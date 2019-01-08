@@ -222,7 +222,6 @@ export default compose( [
 		const autosave = getAutosave( post );
 
 		return {
-			autosave,
 			postId: getCurrentPostId(),
 			currentPostLink: getCurrentPostAttribute( 'link' ),
 			previewLink: forcePreviewLink !== undefined ? forcePreviewLink : previewLink,
