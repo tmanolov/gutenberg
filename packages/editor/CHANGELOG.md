@@ -3,8 +3,8 @@
 ### Deprecations
 
 - The `getAutosave`, `getAutosaveAttribute`, and `hasAutosave` selectors are deprecated. Equivalent selectors have been added to the `@wordpress/core-data` package.
-- The `resetAutosave` action creator is deprecated. An equivalent action creator `receiveAutosave` has been added to the `@wordpress/core-data` package.
-- The `isEditedPostAutosaveable` action creator now requires that the parameter `autosave` is provided.
+- The `resetAutosave` action is deprecated. An equivalent action `receiveAutosave` has been added to the `@wordpress/core-data` package.
+- The `isEditedPostAutosaveable` action now requires that the parameter `autosave` is provided.
 
 ## 9.0.7 (2019-01-03)
 
