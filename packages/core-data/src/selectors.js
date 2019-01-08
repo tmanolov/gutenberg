@@ -224,9 +224,7 @@ export function getAutosaveAttribute( state, post, attributeName ) {
  * @return {?Object} The autosave object, or undefined if there is none.
  */
 export function getAutosave( state, post ) {
-	if ( state.autosave ) {
-		return state.autosave[ post.id ];
-	}
+	return state.autosave[ post.id ];
 }
 
 /**
