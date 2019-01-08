@@ -56,8 +56,8 @@ export function resetAutosave( newAutosave ) {
 		plugin: 'Gutenberg',
 	} );
 
-	const postId = select( 'core' ).getCurrentPostId();
-	dispatch( 'core' ).receiveAutosave( newAutosave, postId );
+	const postId = select( 'core/editor' ).getCurrentPostId();
+	dispatch( 'core' ).receiveAutosave( postId, newAutosave );
 
 	return { type: '__INERT__' };
 }
