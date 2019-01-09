@@ -7,6 +7,7 @@ import { find, includes, get, hasIn, compact } from 'lodash';
  * WordPress dependencies
  */
 import { addQueryArgs } from '@wordpress/url';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -101,11 +102,11 @@ export function* getEmbedPreview( url ) {
 
 /**
  * Requests Upload Permissions from the REST API.
- *
- * @deprecated since 4.9. Callers should use the more generic `canUser()` selector instead of
- *             `hasUploadPermissions()`, e.g. `canUser( 'create', 'media' )`.
  */
 export function* hasUploadPermissions() {
+	deprecated( "select( 'core' ).hasUploadPermissions()", {
+		alternative: "select( 'core' ).canUser( 'create', 'media' )",
+	} );
 	yield* canUser( 'create', 'media' );
 }
 

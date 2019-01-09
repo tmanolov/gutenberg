@@ -8,6 +8,7 @@ import { map, find, get, filter, compact } from 'lodash';
  * WordPress dependencies
  */
 import { select } from '@wordpress/data';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -178,15 +179,15 @@ export function isPreviewEmbedFallback( state, url ) {
  *
  * https://developer.wordpress.org/rest-api/reference/
  *
- * @deprecated since 4.9. Callers should use the more generic `canUser()` selector instead of
- *             `hasUploadPermissions()`, e.g. `canUser( 'create', 'media' )`.
- *
  * @param {Object} state Data state.
  *
  * @return {boolean} Whether or not the user can upload media. Defaults to `true` if the OPTIONS
  *                   request is being made.
  */
 export function hasUploadPermissions( state ) {
+	deprecated( "select( 'core' ).hasUploadPermissions()", {
+		alternative: "select( 'core' ).canUser( 'create', 'media' )",
+	} );
 	return canUser( state, 'create', 'media', undefined, true );
 }
 
