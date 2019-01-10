@@ -149,7 +149,7 @@ describe( 'getAutosave', () => {
 	it( 'returns undefined for the provided post id if no autosave exists for it in state', () => {
 		const postType = 'post';
 		const postId = 2;
-		const autosave = { title: '', excerpt: '', content: '' };
+		const autosave = { title: { raw: '' }, excerpt: { raw: '' }, content: { raw: '' } };
 		const state = {
 			autosave: {
 				1: autosave,
@@ -164,7 +164,7 @@ describe( 'getAutosave', () => {
 	it( 'returns the autosave for the provided post id, if it exists in state', () => {
 		const postType = 'post';
 		const postId = 1;
-		const autosave = { title: '', excerpt: '', content: '' };
+		const autosave = { title: { raw: '' }, excerpt: { raw: '' }, content: { raw: '' } };
 		const state = {
 			autosave: {
 				[ postId ]: autosave,

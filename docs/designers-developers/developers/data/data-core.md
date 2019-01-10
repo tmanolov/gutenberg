@@ -150,7 +150,7 @@ Upload Permissions.
 
 ### getAutosave
 
-Returns the autosave that is a child of the provided post, if one exists.
+Returns the autosave that is a child of the provided post id, if one exists.
 
 *Parameters*
 

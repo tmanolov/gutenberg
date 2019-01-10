@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { BEGIN, COMMIT, REVERT } from 'redux-optimist';
-import { get, pick, includes } from 'lodash';
+import { get, pick, includes, mapValues } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -33,6 +33,8 @@ import {
 	isEditedPostNew,
 	POST_UPDATE_TRANSACTION_ID,
 } from '../selectors';
+import { AUTOSAVE_PROPERTIES } from '../constants';
+import { getPostRawValue } from '../reducer';
 import { resolveSelector } from './utils';
 
 /**
@@ -60,7 +62,7 @@ export const requestPostUpdate = async ( action, store ) => {
 	let edits = getPostEdits( state );
 	const isAutosave = !! action.options.isAutosave;
 	if ( isAutosave ) {
-		edits = pick( edits, [ 'title', 'content', 'excerpt' ] );
+		edits = pick( edits, AUTOSAVE_PROPERTIES );
 	}
 
 	// New posts (with auto-draft status) must be explicitly assigned draft
@@ -104,13 +106,14 @@ export const requestPostUpdate = async ( action, store ) => {
 
 	let request;
 	if ( isAutosave ) {
-		const { getAutosave } = dataSelect( 'core' );
+		const autosave = dataSelect( 'core' ).getAutosave( post.type, post.id );
+		const mappedAutosave = mapValues( pick( autosave, AUTOSAVE_PROPERTIES ), getPostRawValue );
 
 		// Ensure autosaves contain all expected fields, using autosave or
 		// post values as fallback if not otherwise included in edits.
 		toSend = {
-			...pick( post, [ 'title', 'content', 'excerpt' ] ),
-			...getAutosave( post.type, post.id ),
+			...pick( post, AUTOSAVE_PROPERTIES ),
+			...mappedAutosave,
 			...toSend,
 		};
 

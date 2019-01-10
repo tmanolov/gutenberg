@@ -303,7 +303,7 @@ Returns true if the post can be autosaved, or false otherwise.
 *Parameters*
 
  * state: Global application state.
- * autosave: An autosave object.
+ * autosave: A raw autosave object from the REST API.
 
 *Returns*
 

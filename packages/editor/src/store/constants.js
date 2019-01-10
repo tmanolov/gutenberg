@@ -7,3 +7,5 @@
 export const EDIT_MERGE_PROPERTIES = new Set( [
 	'meta',
 ] );
+
+export const AUTOSAVE_PROPERTIES = [ 'title', 'excerpt', 'content' ];

@@ -16,6 +16,8 @@ import {
 	orderBy,
 	reduce,
 	some,
+	pick,
+	mapValues,
 } from 'lodash';
 import createSelector from 'rememo';
 
@@ -42,7 +44,8 @@ import deprecated from '@wordpress/deprecated';
  * Internal dependencies
  */
 import { PREFERENCES_DEFAULTS } from './defaults';
-import { EDIT_MERGE_PROPERTIES } from './constants';
+import { EDIT_MERGE_PROPERTIES, AUTOSAVE_PROPERTIES } from './constants';
+import { getPostRawValue } from './reducer';
 
 /***
  * Module constants
@@ -325,7 +328,8 @@ export function getEditedPostAttribute( state, attributeName ) {
  * null if there is no autosave for the post.
  *
  * @deprecated since 4.9. Callers should use the `getAutosave( postType, postId )` selector from the
- *             '@wordpress/core-data' package and access properties on the returned autosave object.
+ *             '@wordpress/core-data' package and access properties on the returned autosave object
+ *             using getPostRawValue.
  *
  * @param {Object} state         Global application state.
  * @param {string} attributeName Autosave attribute name.
@@ -334,20 +338,21 @@ export function getEditedPostAttribute( state, attributeName ) {
  */
 export function getAutosaveAttribute( state, attributeName ) {
 	deprecated( '`wp.data.select( \'core/editor\' ).getAutosaveAttribute( attributeName )`', {
-		alternative: '`const autosave = wp.data.select( \'core\' ).getAutosave( post ); const attribute = autosave ? autosave[ attribute ] : null`',
+		alternative: '`wp.data.select( \'core\' ).getAutosave( postType, postId )`',
 		plugin: 'Gutenberg',
 	} );
+
+	if ( ! includes( AUTOSAVE_PROPERTIES, attributeName ) ) {
+		return;
+	}
 
 	const postType = getCurrentPostType( state );
 	const postId = getCurrentPostId( state );
 
-	if ( ! select( 'core' ).hasAutosave( postType, postId ) ) {
-		return null;
-	}
-
 	const autosave = select( 'core' ).getAutosave( postType, postId );
-	if ( autosave.hasOwnProperty( attributeName ) ) {
-		return autosave[ attributeName ];
+
+	if ( autosave ) {
+		return getPostRawValue( autosave[ attributeName ] );
 	}
 }
 
@@ -510,14 +515,14 @@ export function isEditedPostEmpty( state ) {
  * Returns true if the post can be autosaved, or false otherwise.
  *
  * @param {Object} state    Global application state.
- * @param {Object} autosave An autosave object.
+ * @param {Object} autosave A raw autosave object from the REST API.
  *
  * @return {boolean} Whether the post can be autosaved.
  */
 export function isEditedPostAutosaveable( state, autosave ) {
 	if ( arguments.length === 1 ) {
 		deprecated( '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable()`', {
-			alternative: '`wp.data.select( \'core\' ).isEditedPostAutosaveable( autosave )`',
+			alternative: '`wp.data.select( \'core/editor\' ).isEditedPostAutosaveable( autosave )`',
 			plugin: 'Gutenberg',
 		} );
 
@@ -544,9 +549,9 @@ export function isEditedPostAutosaveable( state, autosave ) {
 		return true;
 	}
 
-	// If the title, excerpt or content has changed, the post is autosaveable.
+	// If the title or excerpt has changed, the post is autosaveable.
 	return [ 'title', 'excerpt' ].some( ( field ) => (
-		autosave[ field ] !== getEditedPostAttribute( state, field )
+		getPostRawValue( autosave[ field ] ) !== getEditedPostAttribute( state, field )
 	) );
 }
 
@@ -570,7 +575,8 @@ export function getAutosave( state ) {
 
 	const postType = getCurrentPostType( state );
 	const postId = getCurrentPostId( state );
-	return select( 'core' ).getAutosave( postType, postId );
+	const autosave = select( 'core' ).getAutosave( postType, postId );
+	return mapValues( pick( autosave, AUTOSAVE_PROPERTIES ), getPostRawValue );
 }
 
 /**

@@ -144,36 +144,42 @@ describe( 'autosave', () => {
 		expect( state ).toEqual( {} );
 	} );
 
-	it( 'returns a subset of received autosave post, keyed against the postId', () => {
+	it( 'returns the current state with the new autosave merged in, keyed by its parent post id', () => {
 		const existingAutosave = {
-			title: 'Some',
-			content: 'other',
-			excerpt: 'autosave',
+			title: {
+				raw: 'Some',
+			},
+			content: {
+				raw: 'other',
+			},
+			excerpt: {
+				raw: 'autosave',
+			},
+			status: 'publish',
 		};
+
+		const newAutosave = {
+			title: {
+				raw: 'The Title',
+			},
+			content: {
+				raw: 'The Content',
+			},
+			excerpt: {
+				raw: 'The Excerpt',
+			},
+			status: 'draft',
+		};
+
 		const state = autosave( { 1: existingAutosave }, {
 			type: 'RECEIVE_AUTOSAVE',
 			postId: 2,
-			autosave: {
-				title: {
-					raw: 'The Title',
-				},
-				content: {
-					raw: 'The Content',
-				},
-				excerpt: {
-					raw: 'The Excerpt',
-				},
-				status: 'draft',
-			},
+			autosave: newAutosave,
 		} );
 
 		expect( state ).toEqual( {
 			1: existingAutosave,
-			2: {
-				title: 'The Title',
-				content: 'The Content',
-				excerpt: 'The Excerpt',
-			},
+			2: newAutosave,
 		} );
 	} );
 } );
