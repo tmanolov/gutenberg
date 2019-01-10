@@ -162,20 +162,6 @@ Returns the autosave that is a child of the provided post id, if one exists.
 
 The autosave object, or undefined if there is none.
 
-### hasAutosave
-
-Returns the true if there is an autosave for the given post, otherwise false.
-
-*Parameters*
-
- * state: State tree.
- * postType: The type of the parent post.
- * postId: The id of the parent post.
-
-*Returns*
-
-Whether there is an existing autosave.
-
 ### hasFetchedAutosave
 
 Returns true if the REST request for an autosave has completed.

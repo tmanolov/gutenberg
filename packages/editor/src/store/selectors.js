@@ -582,8 +582,8 @@ export function getAutosave( state ) {
 /**
  * Returns the true if there is an existing autosave, otherwise false.
  *
- * @deprecated since 4.9. Callers should use the `hasAutosave( postType, postId )`
- * 			   selector from the '@wordpress/core-data' package.
+ * @deprecated since 4.9. Callers should use the `getAutosave( postType, postId )` selector
+ *             from the '@wordpress/core-data' package and check for a truthy value.
  *
  * @param {Object} state Global application state.
  *
@@ -591,13 +591,13 @@ export function getAutosave( state ) {
  */
 export function hasAutosave( state ) {
 	deprecated( '`wp.data.select( \'core/editor\' ).hasAutosave()`', {
-		alternative: '`wp.data.select( \'core\' ).hasAutosave( postType, postId )`',
+		alternative: '`!! wp.data.select( \'core\' ).getAutosave( postType, postId )`',
 		plugin: 'Gutenberg',
 	} );
 
 	const postType = getCurrentPostType( state );
 	const postId = getCurrentPostId( state );
-	return select( 'core' ).hasAutosave( postType, postId );
+	return !! select( 'core' ).getAutosave( postType, postId );
 }
 
 /**

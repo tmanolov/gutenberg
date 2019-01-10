@@ -12,7 +12,6 @@ import {
 	getEmbedPreview,
 	isPreviewEmbedFallback,
 	getAutosave,
-	hasAutosave,
 } from '../selectors';
 
 describe( 'getEntityRecord', () => {
@@ -117,31 +116,6 @@ describe( 'isPreviewEmbedFallback()', () => {
 			},
 		} );
 		expect( isPreviewEmbedFallback( state, 'http://example.com/' ) ).toEqual( true );
-	} );
-} );
-
-describe( 'hasAutosave', () => {
-	it( 'returns false if there is no autosave', () => {
-		const state = { autosave: {} };
-		const postType = 'post';
-		const postId = 1;
-		const result = hasAutosave( state, postType, postId );
-
-		expect( result ).toBe( false );
-	} );
-
-	it( 'returns true if there is an autosave', () => {
-		const postType = 'post';
-		const postId = 1;
-		const state = {
-			autosave: {
-				[ postId ]: { title: '', excerpt: '', content: '' },
-			},
-		};
-
-		const result = hasAutosave( state, postType, postId );
-
-		expect( result ).toBe( true );
 	} );
 } );
 

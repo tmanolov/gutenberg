@@ -208,19 +208,6 @@ export function getAutosave( state, postType, postId ) {
 }
 
 /**
- * Returns the true if there is an autosave for the given post, otherwise false.
- *
- * @param {Object} state State tree.
- * @param {string} postType The type of the parent post.
- * @param {number} postId   The id of the parent post.
- *
- * @return {boolean} Whether there is an existing autosave.
- */
-export function hasAutosave( state, postType, postId ) {
-	return !! getAutosave( state, postType, postId );
-}
-
-/**
  * Returns true if the REST request for an autosave has completed.
  *
  * @param {Object} state State tree.
