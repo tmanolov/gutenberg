@@ -1004,7 +1004,7 @@ Returns whether the blocks matches the template or not.
 
 *Parameters*
 
- * state: null
+ * state: Editor state.
 
 *Returns*
 
@@ -1016,11 +1016,11 @@ Returns the defined block template
 
 *Parameters*
 
- * state: null
+ * state: Editor state.
 
 *Returns*
 
-Block Template
+Block Template.
 
 ### getTemplateLock
 
