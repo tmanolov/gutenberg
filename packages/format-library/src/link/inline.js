@@ -115,7 +115,6 @@ class InlineLinkUI extends Component {
 		this.submitLink = this.submitLink.bind( this );
 		this.onKeyDown = this.onKeyDown.bind( this );
 		this.onChangeInputValue = this.onChangeInputValue.bind( this );
-		this.setLinkTarget = this.setLinkTarget.bind( this );
 		this.onClickOutside = this.onClickOutside.bind( this );
 		this.resetState = this.resetState.bind( this );
 		this.setLinkAttributes = this.setLinkAttributes.bind( this );
